@@ -59,7 +59,7 @@ class GithHubWrapper {
     }
 }
 
-let token = "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"
+let token = "insert token"
 let gistItem = "387793c056a365a976495211feca4a78";
 
 let ghWrapper = new GithHubWrapper(token)
