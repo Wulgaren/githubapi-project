@@ -61,7 +61,7 @@ class GitHubWrapper {
 }
 
 let token = "insert token"
-m = "c5ca8f4fef857763e92a2c2a8092ce6b";
+let gistItem = "c5ca8f4fef857763e92a2c2a8092ce6b";
 
 let ghWrapper = new GitHubWrapper(token)
 let gistPayload = {
