@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-class GithHubWrapper {
+class GitHubWrapper {
     constructor(token) {
         this.token = token
         this.client = axios.create({
@@ -61,9 +61,9 @@ class GithHubWrapper {
 }
 
 let token = "insert token"
-let gistItem = "c5ca8f4fef857763e92a2c2a8092ce6b";
+m = "c5ca8f4fef857763e92a2c2a8092ce6b";
 
-let ghWrapper = new GithHubWrapper(token)
+let ghWrapper = new GitHubWrapper(token)
 let gistPayload = {
     "description": "Hello World Examples 2",
     "public": true,
@@ -94,3 +94,5 @@ ghWrapper.getRequest("/gists/public").then((response) => {
 // ghWrapper.filterGists("/gists", "")
 // ghWrapper.deleteGist(gistItem)
 // ghWrapper.updateGist(gistItem, gistPayload)
+
+export default wrapper
