@@ -31,40 +31,41 @@ class GithHubWrapper {
     }
 
     root() {
-        return this.getRequest('/')
+        return this.getRequest('/').then((response) => console.log(response.data))
     }
 
     createGist(payload) {
-        return this.postRequest('/gists', payload)
+        return this.postRequest('/gists', payload).then((response) => console.log(response.data))
     }
 
     getGist(gistId) {
-        return this.getRequest(`/gists/${gistId}`)
+        return this.getRequest(`/gists/${gistId}`).then((response) => console.log(response.data.description, ' - ', response.data.url))
     }
 
     deleteGist(gistId) {
-        return this.deleteRequest(`/gists/${gistId}`)
+        return this.deleteRequest(`/gists/${gistId}`).then((response) => console.log(response.data))
     }
 
     updateGist(gistId, payload) {
-        return this.patchRequest(`/gists/${gistId}`, payload)
+        return this.patchRequest(`/gists/${gistId}`, payload).then((response) => console.log(response.data))
     }
 
-    filterGists(responseData, filterString) {
-        for (let gist of responseData){
+    filterGists(location, filterString) {
+        this.getRequest(location).then((response) => {
+        for (let gist of response.data){
             if (gist.description.includes(filterString)){
-                console.log(gist)
+                console.log(gist.description, ' - ', gist.url)
             }
-        }
+        }})
     }
 }
 
 let token = "insert token"
-let gistItem = "387793c056a365a976495211feca4a78";
+let gistItem = "c5ca8f4fef857763e92a2c2a8092ce6b";
 
 let ghWrapper = new GithHubWrapper(token)
 let gistPayload = {
-    "description": "Hello World Examples",
+    "description": "Hello World Examples 2",
     "public": true,
     "files": {
         "hello_world.rb": {
@@ -82,9 +83,14 @@ let gistPayload = {
     }
 }
 
-// ghWrapper.root().then((response) => console.log(response.data))
-// ghWrapper.getGist(gistItem).then((response) => console.log(response.data))
-// ghWrapper.createGist(gistPayload).then((response) => console.log(response.data))
-ghWrapper.getRequest("/gists").then((response) => ghWrapper.filterGists(response.data, "a"))
-// ghWrapper.deleteGist(gistItem).then((response) => console.log(response.data))
-// ghWrapper.updateGist(gistItem, gistPayload).then((response) => console.log(response.data))
+// ghWrapper.root()
+ghWrapper.getRequest("/gists/public").then((response) => {
+    for (let gist of response.data){    
+        console.log(gist.description)
+    }
+})
+// ghWrapper.getGist(gistItem)
+// ghWrapper.createGist(gistPayload)
+// ghWrapper.filterGists("/gists", "")
+// ghWrapper.deleteGist(gistItem)
+// ghWrapper.updateGist(gistItem, gistPayload)
