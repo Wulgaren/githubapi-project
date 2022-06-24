@@ -31,23 +31,23 @@ class GitHubWrapper {
     }
 
     root() {
-        return this.getRequest('/').then((response) => console.log(response.data))
+        return this.getRequest('/')
     }
 
     createGist(payload) {
-        return this.postRequest('/gists', payload).then((response) => console.log(response.data))
+        return this.postRequest('/gists', payload)
     }
 
     getGist(gistId) {
-        return this.getRequest(`/gists/${gistId}`).then((response) => console.log(response.data.description, ' - ', response.data.url))
+        return this.getRequest(`/gists/${gistId}`)
     }
 
     deleteGist(gistId) {
-        return this.deleteRequest(`/gists/${gistId}`).then((response) => console.log(response.data))
+        return this.deleteRequest(`/gists/${gistId}`)
     }
 
     updateGist(gistId, payload) {
-        return this.patchRequest(`/gists/${gistId}`, payload).then((response) => console.log(response.data))
+        return this.patchRequest(`/gists/${gistId}`, payload)
     }
 
     filterGists(location, filterString) {
@@ -60,8 +60,9 @@ class GitHubWrapper {
     }
 }
 
-let token = "insert token"
-let gistItem = "c5ca8f4fef857763e92a2c2a8092ce6b";
+var token = ""
+//sprawdzic czy token jest ok jak nie to dostajemy 401
+let gistItem = "d7a4dde80a396c9d6b1058e28c76e825";
 
 let ghWrapper = new GitHubWrapper(token)
 let gistPayload = {
@@ -83,16 +84,14 @@ let gistPayload = {
     }
 }
 
-// ghWrapper.root()
-ghWrapper.getRequest("/gists/public").then((response) => {
-    for (let gist of response.data){    
-        console.log(gist.description)
-    }
-})
-// ghWrapper.getGist(gistItem)
-// ghWrapper.createGist(gistPayload)
+// ghWrapper.root().then((response) => console.log(response.data))
+// ghWrapper.getRequest("/gists/public").then((response) => {
+//     for (let gist of response.data){    
+//         console.log(gist.description)
+//     }
+// })
+ghWrapper.getGist(gistItem).then((response) => console.log(response.data.description, ' - ', response.data.url))
+// ghWrapper.createGist(gistPayload).then((response) => console.log(response.data))
 // ghWrapper.filterGists("/gists", "")
-// ghWrapper.deleteGist(gistItem)
-// ghWrapper.updateGist(gistItem, gistPayload)
-
-export default wrapper
+// ghWrapper.deleteGist(gistItem).then((response) => console.log(response.data))
+// ghWrapper.updateGist(gistItem, gistPayload).then((response) => console.log(response.data))
