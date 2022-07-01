@@ -4,23 +4,33 @@ const app = express()
 const port = 3000
 const GitHubWrapper = require('/Users/natios/Documents/School/JS/project/wrapper/wrapper-module')
 
+var wrapper = new GitHubWrapper('');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('Hey!')
+    res.send('Git Wrapper has been created.')
 })
 
-app.get('/app1', (req, res) => {
-    res.send('hello from app1')
+app.get(`/gist/:gistId/comments`, (req, res) => {
+    let comments = "";
+    wrapper.getComments(req.params.gistId).then((response) => {
+        console.log(response.data)
+        response.data.forEach(element => {
+            comments += element.body + '<br>'
+        });
+        res.send("Komentarze: <br><br>" + comments)
+    })
 })
 
-app.get('/app2', (req, res) => {
-    res.send('hello from app2')
+app.get(`/gist/:gistId/comments/count`, (req, res) => {
+    wrapper.getCommentsCount(req.params.gistId).then((count) => {
+        res.send(`Ilość komentarzy: ${count}`)
+    })
 })
 
 app.get('/github-routes', (req, res) => {
-    let wrapper = new GitHubWrapper('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');
     wrapper.getGist('d7a4dde80a396c9d6b1058e28c76e825').then(response => {
         res.send(response.data['description'])
     })

@@ -54,9 +54,19 @@ class GitHubWrapper {
         this.getRequest(location).then((response) => {
         for (let gist of response.data){
             if (gist.description.includes(filterString)){
-                console.log(gist.description, ' - ', gist.url)
+                return `${gist.description}  -  ${gist.url}`
             }
         }})
+    }
+
+    getComments(gistId) {
+        return this.getRequest(`/gists/${gistId}/comments`)
+    }
+
+    async getCommentsCount(gistId) {
+        return await this.getComments(gistId).then((response) => {
+            return Object.keys(response.data).length
+        })
     }
 }
 

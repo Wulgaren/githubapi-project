@@ -30,7 +30,9 @@ let gistPayload = {
 //         console.log(gist.description)
 //     }
 // })
-ghWrapper.getGist(gistItem).then((response) => console.log(response.data.description, ' - ', response.data.url))
+// console.log(Promise.resolve(ghWrapper.getCommentsCount(gistItem)))
+ghWrapper.getCommentsCount(gistItem).then(console.log)
+// ghWrapper.getGist(gistItem).then((response) => console.log(response.data.description, ' - ', response.data.url))
 // ghWrapper.createGist(gistPayload).then((response) => console.log(response.data))
 // ghWrapper.filterGists("/gists", "")
 // ghWrapper.deleteGist(gistItem).then((response) => console.log(response.data))
